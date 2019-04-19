@@ -36,24 +36,27 @@ app.get("/all", function(req, res) {
 // Scrape data from one site and place it into the mongodb db
 app.get("/scrape", function(req, res) {
   // Make a request via axios for the news section of `ycombinator`
-  axios.get("https://drudgereport.com/").then(function(response) {
+  axios.get("https://www.dailywire.com/").then(function(response) {
     // Load the html body from axios into cheerio
     var $ = cheerio.load(response.data);
     // For each element with a "title" class
-    $(".title").each(function(i, element) {
+    $("article").each(function(i, element) {
       // Save the text and href of each link enclosed in the current element
       var title = $(element)
-        .children("a")
+        .find("h2")
         .text();
-      var link = $(element)
-        .children("a")
-        .attr("href");
+      var link =
+        "https://www.dailywire.com" +
+        $(element)
+          .find("a")
+          .attr("href");
 
       // If this found element had both a title and a link
       if (title && link) {
         // Insert the data in the scrapedData db
         db.scrapedData.insert(
           {
+            index: i,
             title: title,
             link: link
           },
@@ -73,4 +76,9 @@ app.get("/scrape", function(req, res) {
 
   // Send a "Scrape Complete" message to the browser
   res.send("Scrape Complete");
+});
+
+// Listen on port 3000
+app.listen(3000, function() {
+  console.log("App running on port 3000!");
 });
