@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="jumbotron">
+        <h1>scraper</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {{#if articles}}
+            {{#each articles}}
+            <br>
+            <div class="Card cardSt">
+                <div class="card-header">
+                    <h3 class="art-title">{{this.title}}
+                        <button type="button" class="btn btn-success sv">save</button>
+
+                    </h3>
+                </div>
+
+                <div class="card-body">
+                    <a href={{link}}>{{this.link}}</a>
+                    <p class="card-text">{{this.summary}}</p>
+                </div>
+            </div>
+            <br>
+            {{/each}}
+            {{/if}}
+        </div>
+    </div>
+</div>

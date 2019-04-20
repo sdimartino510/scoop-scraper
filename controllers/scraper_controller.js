@@ -2,16 +2,16 @@
 var mongojs = require("mongojs");
 var axios = require("axios");
 var cheerio = require("cheerio");
-// var db = require("../models");
+var db = require("../models");
 var mongoose = require("mongoose");
 
-var databaseUrl = "ScoopScraperDB";
-var collections = ["scrapedData"];
+// var databaseUrl = "ScoopScraperDB";
+// var collections = ["scrapedData"];
 
-var db = mongojs(databaseUrl, collections);
-db.on("error", function(error) {
-  console.log("Database Error:", error);
-});
+// var db = mongojs(databaseUrl, collections);
+// db.on("error", function(error) {
+//   console.log("Database Error:", error);
+// });
 
 var MONGODB_URI =
   process.env.MONGODB_URI || "mongodb://localhost/ScoopScraperDB";
@@ -40,9 +40,8 @@ module.exports = function(app) {
         // If this found element had both a title and a link
         if (title && link) {
           // Insert the data in the scrapedData db
-          db.scrapedData.insert(
+          db.Article.create(
             {
-              index: i,
               title: title,
               link: link
             },
@@ -61,7 +60,18 @@ module.exports = function(app) {
     });
 
     // Send a "Scrape Complete" message to the browser
-    res.send("Scrape Complete");
+    res.redirect("/");
+  });
+
+  app.get("/", function(req, res) {
+    db.Article.find({})
+      .limit(10)
+      .then(function(results) {
+        var hbObj = {
+          articles: results
+        };
+        res.render("index", hbObj);
+      });
   });
 
   // Route for getting all Articles from the db
