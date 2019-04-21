@@ -1,18 +1,10 @@
-// var app = express();
 var mongojs = require("mongojs");
 var axios = require("axios");
 var cheerio = require("cheerio");
 var db = require("../models");
 var mongoose = require("mongoose");
 
-// var databaseUrl = "ScoopScraperDB";
-// var collections = ["scrapedData"];
-
-// var db = mongojs(databaseUrl, collections);
-// db.on("error", function(error) {
-//   console.log("Database Error:", error);
-// });
-
+// If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
 var MONGODB_URI =
   process.env.MONGODB_URI || "mongodb://localhost/ScoopScraperDB";
 
@@ -29,7 +21,7 @@ module.exports = function(app) {
         // Save the text and href of each link enclosed in the current element
 
         var title = $(element)
-          .find("h2")
+          .find("h3")
           .text();
         var link =
           "https://www.dailywire.com" +
@@ -64,14 +56,12 @@ module.exports = function(app) {
   });
 
   app.get("/", function(req, res) {
-    db.Article.find({})
-      .limit(10)
-      .then(function(results) {
-        var hbObj = {
-          articles: results
-        };
-        res.render("index", hbObj);
-      });
+    db.Article.find({}).then(function(results) {
+      var hbObj = {
+        articles: results
+      };
+      res.render("index", hbObj);
+    });
   });
 
   // Route for getting all Articles from the db
