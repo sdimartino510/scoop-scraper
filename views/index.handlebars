@@ -13,9 +13,10 @@
             {{#each articles}}
             <br>
             <div class="Card cardSt">
-                <div class="card-header bg-secondary">
+                <div class="card-header bg-secondary text-light">
                     <h3 class="art-title">{{this.title}}
-                        <button type="button" class="btn btn-primary sv">save</button>
+                        <button onclick="buttonHandler(this, '{{_id}}')" type="button"
+                            class="btn btn-primary sv">save</button>
 
                     </h3>
                 </div>

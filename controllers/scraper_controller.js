@@ -31,7 +31,7 @@ module.exports = function(app) {
 
         // If this found element had both a title and a link
         if (title && link) {
-          // Insert the data in the scrapedData db
+          // Insert the data in the Article db
           db.Article.create(
             {
               title: title,
@@ -49,10 +49,11 @@ module.exports = function(app) {
           );
         }
       });
+      res.redirect("/");
     });
 
-    // Send a "Scrape Complete" message to the browser
-    res.redirect("/");
+    // // Send a "Scrape Complete" message to the browser
+    // res.redirect("/");
   });
 
   app.get("/", function(req, res) {
@@ -71,6 +72,25 @@ module.exports = function(app) {
       .then(function(dbArticle) {
         // If we were able to successfully find Articles, send them back to the client
         res.json(dbArticle);
+      })
+      .catch(function(err) {
+        // If an error occurred, send it to the client
+        res.json(err);
+      });
+  });
+
+  app.post("/savearticle", function(req, res) {
+    db.Article.findOne({ _id: req.params.id })
+      // ..and populate all of the notes associated with it
+      .populate("note")
+      .then(function(dbArticle) {
+        // If we were able to successfully find an Article with the given id, send it back to the client
+        res.json(dbArticle);
+        // save article here
+        db.SavedArticle.create({
+          title: title,
+          link: link
+        });
       })
       .catch(function(err) {
         // If an error occurred, send it to the client
