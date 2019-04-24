@@ -51,9 +51,6 @@ module.exports = function(app) {
       });
       res.redirect("/");
     });
-
-    // // Send a "Scrape Complete" message to the browser
-    // res.redirect("/");
   });
 
   app.get("/", function(req, res) {
@@ -62,6 +59,15 @@ module.exports = function(app) {
         articles: results
       };
       res.render("index", hbObj);
+    });
+  });
+
+  app.get("/savedarticles", function(req, res) {
+    db.SavedArticle.find({}).then(function(results) {
+      var hbObj2 = {
+        articles: results
+      };
+      res.render("index", hbObj2);
     });
   });
 
