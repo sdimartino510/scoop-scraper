@@ -80,7 +80,7 @@ module.exports = function(app) {
   });
 
   app.post("/savearticle", function(req, res) {
-    db.Article.findOne({ _id: req.params.id })
+    db.Article.findOne({ _id: req.body.id })
       // ..and populate all of the notes associated with it
       .populate("note")
       .then(function(dbArticle) {
@@ -88,8 +88,8 @@ module.exports = function(app) {
         res.json(dbArticle);
         // save article here
         db.SavedArticle.create({
-          title: title,
-          link: link
+          title: req.body.title,
+          link: req.body.link
         });
       })
       .catch(function(err) {

@@ -15,9 +15,9 @@
             <div class="Card cardSt">
                 <div class="card-header bg-secondary text-light">
                     <h3 class="art-title">{{this.title}}
-                        <button onclick="buttonHandler(this, '{{_id}}')" type="button"
+                        <button data-title="{{this.title}}" data-link="{{this.link}}" id={{_id}}
+                            onclick="buttonHandler(this, '{{_id}}')" type="button"
                             class="btn btn-primary sv">save</button>
-
                     </h3>
                 </div>
 
