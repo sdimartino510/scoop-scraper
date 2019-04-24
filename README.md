@@ -8,16 +8,16 @@ Use of the site is simple. Simply click "Scrape the latest headlines" to get the
 
 ## Technologies used
 
-*HTML5
-*CSS3
-*JavaScript
-*Node.JS
-*Express
-*Handlebars
-*MongoDB
-*Mongoose
-*Axios
-*Cheerio
+*HTML5  
+*CSS3  
+*JavaScript  
+*Node.JS  
+*Express  
+*Handlebars  
+*MongoDB  
+*Mongoose  
+*Axios  
+*Cheerio  
 
 ## Contact
 
