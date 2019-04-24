@@ -144,3 +144,5 @@ module.exports = function(app) {
       });
   });
 };
+
+// Did not have time to complete the note-adding functionality. The structure for it is already there, starting on line 124, I just didn't have time to make it work.
